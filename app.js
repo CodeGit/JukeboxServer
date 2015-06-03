@@ -9,10 +9,19 @@ var express = require('express')
   , http = require('http')
   , path = require('path');
 
+var program = require("commander");
+program.version("0.0.1");
+program.option('-p, --port <port>', "server will listen on this port", parseInt);
+program.option('-c, --config <file>', "server config file");
+program.option('-i, --itunes <file>', "itunes library xml file");
+
+program.parse(process.argv);
+console.log(program);
+
 var app = express();
 
 // all environments
-app.set('port', process.env.PORT || 3000);
+app.set('port', program.port || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());
