@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * Module dependencies.
@@ -16,6 +17,10 @@ program.version("0.0.1")
 .option('-i, --itunes <file>', "itunes library xml file");
 
 program.parse(process.argv);
+
+if (program.itunes != undefined) {
+	
+}
 
 var app = express();
 
