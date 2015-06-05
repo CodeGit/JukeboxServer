@@ -18,8 +18,12 @@ program.version("0.0.1")
 
 program.parse(process.argv);
 
-if (program.itunes != undefined) {
-	
+if (program.args.length > 0) {
+	console.log("Processing directories");
+}
+
+if (program.itunes !== undefined) {
+	console.log("Processing itunes xml");
 }
 
 var app = express();
