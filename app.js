@@ -4,17 +4,20 @@
  * Module dependencies.
  */
 
+require('rootpath')();
+
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
-  , path = require('path');
+  , path = require('path')
+  , musicScanner = require("lib/musicScanner");
 
 var program = require("commander");
 program.version("0.0.1")
-.option('-p, --port <port>', "server will listen on this port", parseInt)
-.option('-c, --config <file>', "server config file")
-.option('-i, --itunes <file>', "itunes library xml file");
+	.option('-p, --port <port>', "server will listen on this port", parseInt)
+	.option('-c, --config <file>', "server config file")
+	.option('-i, --itunes <file>', "itunes library xml file");
 
 program.parse(process.argv);
 
