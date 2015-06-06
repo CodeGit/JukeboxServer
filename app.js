@@ -6,12 +6,13 @@
 
 require('rootpath')();
 
+var DEFAULT_CONFIG_FILE = "config/default.json";
+
 var express = require('express')
   , routes = require('./routes')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , musicScanner = require("lib/musicScanner")
   , config = require('lib/config');
 
 var program = require("commander");
@@ -24,7 +25,12 @@ program.parse(process.argv);
 
 if (program.config !== undefined) {
 	config.loadConfig(program.config);
+} else {
+	config.loadConfig(DEFAULT_CONFIG_FILE);
 }
+
+var db = require("lib/musicDatabase");
+db.initialise();
 
 if (program.args.length > 0) {
 	console.log("Processing directories");
@@ -48,7 +54,7 @@ app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
 
 // development only
-if ('development' == app.get('env')) {
+if ('development' === app.get('env')) {
   app.use(express.errorHandler());
 }
 
