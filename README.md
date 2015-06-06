@@ -24,7 +24,16 @@ Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)
 Nodeclipse is free open-source project that grows with your contributions.
 
 #### Dependencies
+
+##### System
+mongodb
+
+##### Javascript
 express
 jade
 commander
 rootpath
+mongoose
+
+
+

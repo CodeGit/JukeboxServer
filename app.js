@@ -11,7 +11,8 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
-  , musicScanner = require("lib/musicScanner");
+  , musicScanner = require("lib/musicScanner")
+  , config = require('lib/config');
 
 var program = require("commander");
 program.version("0.0.1")
@@ -20,6 +21,10 @@ program.version("0.0.1")
 	.option('-i, --itunes <file>', "itunes library xml file");
 
 program.parse(process.argv);
+
+if (program.config !== undefined) {
+	config.loadConfig(program.config);
+}
 
 if (program.args.length > 0) {
 	console.log("Processing directories");

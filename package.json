@@ -10,6 +10,7 @@
     "express": "3.2.6",
     "jade": "*",
     "commander": "*",
-    "rootpath": "~0.1.2"
+    "rootpath": "~0.1.2",
+    "mongoose": "~4.0.4"
   }
 }
