@@ -3,7 +3,6 @@
 		"host": "localhost",
 		"port": 27017,
 		"db": "jukeboxServer",
-		"model": "music",
 		"user": "",
 		"password": ""
 	}

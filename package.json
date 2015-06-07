@@ -11,6 +11,7 @@
     "jade": "*",
     "commander": "*",
     "rootpath": "~0.1.2",
-    "mongoose": "~4.0.4"
+    "mongoose": "~4.0.4",
+    "promise": "~7.0.1"
   }
 }

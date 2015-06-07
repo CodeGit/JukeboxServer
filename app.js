@@ -23,17 +23,15 @@ program.version("0.0.1")
 
 program.parse(process.argv);
 
-if (program.config !== undefined) {
-	config.loadConfig(program.config);
-} else {
-	config.loadConfig(DEFAULT_CONFIG_FILE);
-}
+config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
 
 var db = require("lib/musicDatabase");
 db.initialise();
 
-if (program.args.length > 0) {
-	console.log("Processing directories");
+var scanner = require("lib/musicScanner");
+var directories = program.args.slice(2);
+if (directories.length > 0) {
+	scanner.scan(directories);
 }
 
 if (program.itunes !== undefined) {
