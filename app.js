@@ -29,9 +29,8 @@ var db = require("lib/musicDatabase");
 db.initialise();
 
 var scanner = require("lib/musicScanner");
-var directories = program.args.slice(2);
-if (directories.length > 0) {
-	scanner.scan(directories);
+if (program.args.length > 0) {
+	scanner.scan(program.args);
 }
 
 if (program.itunes !== undefined) {

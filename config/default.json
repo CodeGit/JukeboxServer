@@ -5,5 +5,9 @@
 		"db": "jukeboxServer",
 		"user": "",
 		"password": ""
-	}
+	},
+	"music": {
+		"suffixes": [".mp3", ".m4a"]
+	},
+	"image-suffix": [".jpg"]
 }
