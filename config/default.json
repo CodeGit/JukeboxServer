@@ -9,5 +9,7 @@
 	"music": {
 		"suffixes": [".mp3", ".m4a"]
 	},
-	"image-suffix": [".jpg"]
+	"image": { 
+		"suffixes": [".jpg", ".png"]
+	}
 }
