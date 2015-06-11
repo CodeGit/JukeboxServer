@@ -28,13 +28,19 @@ config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
 var db = require("lib/musicDatabase");
 db.initialise();
 
+var readPlaylists = function(itunes) {
+	if (itunes !== undefined) {
+		console.log("Reading itunes");
+	}
+};
+
 var scanner = require("lib/musicScanner");
 if (program.args.length > 0) {
-	scanner.scan(program.args);
-}
-
-if (program.itunes !== undefined) {
-	console.log("Processing itunes xml");
+	scanner.scan(program.args, function() {
+		readPlaylists(program.itunes);
+	});
+} else {
+	readPlaylists(program.itunes);
 }
 
 var app = express();
