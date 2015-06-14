@@ -31,6 +31,8 @@ db.initialise();
 var readPlaylists = function(itunes) {
 	if (itunes !== undefined) {
 		console.log("Reading itunes");
+		var itunesReader = require("lib/itunesParser");
+		itunesReader.createPlaylists(itunes);
 	}
 };
 
