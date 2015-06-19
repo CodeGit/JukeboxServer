@@ -12,6 +12,7 @@
     "commander": "*",
     "rootpath": "~0.1.2",
     "mongoose": "~4.0.4",
-    "musicmetadata": "~1.0.1"
+    "musicmetadata": "~1.0.1",
+    "itunes-data": "~0.1.1"
   }
 }
