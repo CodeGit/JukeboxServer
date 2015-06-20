@@ -1,0 +1,15 @@
+{
+	"mongo": {
+		"host": "localhost",
+		"port": 27017,
+		"db": "jukebox",
+		"user": "",
+		"password": ""
+	},
+	"music": {
+		"suffixes": [".mp3", ".m4a"]
+	},
+	"image": { 
+		"suffixes": [".jpg", ".png"]
+	}
+}
