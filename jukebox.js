@@ -17,9 +17,12 @@ var express = require('express')
 
 var program = require("commander");
 program.version("0.0.1")
+	.usage("node jukebox.js <music-dir(s)>")
 	.option('-p, --port <port>', "server will listen on this port", parseInt)
 	.option('-c, --config <file>', "server config file")
-	.option('-i, --itunes <file>', "itunes library xml file");
+	.option('-i, --itunes <file>', "itunes library xml file")
+	.option('-m, --m3u <file>', "a comma separated list of m3u playlists")
+	.option('-d, --directory <dir>', "directory of m3u playlists");
 
 program.parse(process.argv);
 
@@ -28,21 +31,34 @@ config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
 var db = require("lib/musicDatabase");
 db.initialise();
 
-var readPlaylists = function(itunes) {
+var readItunes = function(itunes) {
 	if (itunes !== undefined) {
 		console.log("Reading itunes");
-		var itunesReader = require("lib/itunesParser");
+		var itunesReader = require("lib/playlistsFromItunes");
 		itunesReader.createPlaylists(itunes);
+	}
+};
+
+var readPlaylists = function(dir, playlistsString) {
+	var playlistReader = require("lib/playlistsFromM3u");
+	if (dir !== undefined) {
+		playlistReader.readPlaylistDirectory(dir);
+	}
+	if (playlistsString !== undefined) {
+		var playlists = playlistsString.split(",");
+		playlistReader.readPlaylists(playlists);
 	}
 };
 
 var scanner = require("lib/musicScanner");
 if (program.args.length > 0) {
 	scanner.scan(program.args, function() {
-		readPlaylists(program.itunes);
+		readItunes(program.itunes);
+		readPlaylists(program.directory, program.m3u);
 	});
 } else {
-	readPlaylists(program.itunes);
+	readItunes(program.itunes);
+	readPlaylists(program.directory, program.m3u);
 }
 
 var app = express();
