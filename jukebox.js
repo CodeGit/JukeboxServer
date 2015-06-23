@@ -15,7 +15,7 @@ var express = require('express')
   , path = require('path')
   , config = require('lib/config');
 
-var program = require("commander");
+var program = require("fs ");
 program.version("0.0.1")
 	.usage("node jukebox.js <music-dir(s)>")
 	.option('-p, --port <port>', "server will listen on this port", parseInt)
