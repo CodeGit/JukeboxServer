@@ -13,9 +13,10 @@ var express = require('express')
   , user = require('./routes/user')
   , http = require('http')
   , path = require('path')
+  , fs = require('fs')
   , config = require('lib/config');
 
-var program = require("fs ");
+var program = require("commander");
 program.version("0.0.1")
 	.usage("node jukebox.js <music-dir(s)>")
 	.option('-p, --port <port>', "server will listen on this port", parseInt)

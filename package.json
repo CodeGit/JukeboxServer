@@ -9,9 +9,9 @@
   "dependencies": {
     "chai": "~3.0.0",
     "commander": "^2.8.1",
-    "express": "^3.2.6",
+    "express": "^3.21.0",
     "fs": "0.0.2",
-    "jade": "*",
+    "jade": "^1.11.0",
     "mocha": "~2.2.5",
     "mongoose": "^4.0.6",
     "musicmetadata": "^1.0.1",
