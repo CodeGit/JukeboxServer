@@ -53,7 +53,7 @@ var readPlaylists = function(dir, playlistsString) {
 
 var scanner = require("lib/musicScanner");
 if (program.args.length > 0) {
-	scanner.scan(program.args, function() {
+	scanner.scanDirectories(program.args, function() {
 		readItunes(program.itunes);
 		readPlaylists(program.directory, program.m3u);
 	});
