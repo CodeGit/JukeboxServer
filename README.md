@@ -5,7 +5,11 @@
 
 
 ## Usage
+node app.js
 
+node jukebox.js <MUSIC DIRS> -p PORT -d <PLAYLIST DIR> -m <COMMA SEPARATED PLAYLISTS>
+
+node --help
 
 
 ## Developing
