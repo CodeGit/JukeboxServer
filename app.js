@@ -21,8 +21,8 @@ var express = require('express')
   , fs = require('fs')
   , config = require('lib/config')
   , user = require('./routes/user')
-  , song = require("./routes/song")
-  , db = require("lib/musicDatabase");
+  , music = require("lib/music/musicRoutes")
+  , db = require("lib/database");
 
 var app = express();
 module.exports = app;
@@ -85,7 +85,7 @@ var startServer = function() {
 
 	app.get('/', routes.index);
 	app.get('/users', user.list);
-	app.use('/songs', song);
+	app.use('/music', music);
 
 	var server = app.listen(app.get('port'), function() {
 		console.log('Express server listening on port ' + app.get('port'));
