@@ -10,16 +10,19 @@ var DEFAULT_CONFIG_FILE = "config/default.json";
 
 var express = require('express')
   , routes = require('./routes')
-  , user = require('./routes/user')
-  , song = require("./routes/song")
   , cookieParser = require('cookie-parser')
   , cookieSession = require('cookie-session')
   , formidable = require("formidable")
   , methodOverride = require("method-override")
-  , http = require('http')
+  , favicon = require("serve-favicon")
+  , logger = require("morgan")
+  , errorHandler = require("errorhandler")
   , path = require('path')
   , fs = require('fs')
-  , config = require('lib/config');
+  , config = require('lib/config')
+  , user = require('./routes/user')
+  , song = require("./routes/song")
+  , db = require("lib/musicDatabase");
 
 var app = express();
 module.exports = app;
@@ -33,13 +36,6 @@ program.version("0.0.1")
 	.option('-m, --m3u <file>', "a comma separated list of m3u playlists")
 	.option('-d, --directory <dir>', "directory of m3u playlists")
 	.option('-v, --development <y/n>', "run in dev mode for more output");
-
-program.parse(process.argv);
-
-config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
-
-var db = require("lib/musicDatabase");
-db.initialise();
 
 /*
 var readItunes = function(itunes) {
@@ -74,28 +70,34 @@ var startServer = function() {
 	
 	app.set('views', __dirname + '/views');
 	app.set('view engine', 'jade');
-	app.use(express.favicon());
-	app.use(express.logger('dev'));
-	app.use(formidable());
+	app.use(favicon(config.settings.favicon));
+	app.use(logger('dev'));
+	//app.use(formidable());
 	app.use(cookieParser());
 	app.use(cookieSession({secret:'jukebox'}));
 	app.use(methodOverride());
-	app.use(app.router);
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	// development only
 	//if ('development' === app.get('env') || program.development === "y") {
-	  app.use(express.errorHandler());
+	  app.use(errorHandler());
 	//}
 
 	app.get('/', routes.index);
 	app.get('/users', user.list);
 	app.use('/songs', song);
 
-	http.createServer(app).listen(app.get('port'), function(){
-	  console.log('Express server listening on port ' + app.get('port'));
+	var server = app.listen(app.get('port'), function() {
+		console.log('Express server listening on port ' + app.get('port'));
 	});
 };
+
+//initialisation
+program.parse(process.argv);
+
+config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
+
+db.initialise();
 
 var scanner = require("lib/utils/musicScanner");
 if (program.args.length > 0) {

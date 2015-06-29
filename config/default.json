@@ -11,5 +11,6 @@
 	},
 	"image": { 
 		"suffixes": [".jpg", ".png"]
-	}
+	},
+	"favicon": "public/images/favicon.ico"
 }
