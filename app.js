@@ -8,34 +8,37 @@ require('rootpath')();
 
 var DEFAULT_CONFIG_FILE = "config/default.json";
 
-var express = require('express')
-  , routes = require('./routes')
-  , cookieParser = require('cookie-parser')
-  , cookieSession = require('cookie-session')
-  , formidable = require("formidable")
-  , methodOverride = require("method-override")
-  , favicon = require("serve-favicon")
-  , logger = require("morgan")
-  , errorHandler = require("errorhandler")
-  , path = require('path')
-  , fs = require('fs')
-  , config = require('lib/config')
-  , user = require('./routes/user')
-  , music = require("lib/music/musicRoutes")
-  , db = require("lib/database");
+var express = require('express'),
+	routes = require('./routes'),
+	cookieParser = require('cookie-parser'),
+	cookieSession = require('cookie-session'),
+	formidable = require("formidable"),
+	methodOverride = require("method-override"),
+	favicon = require("serve-favicon"),
+	logger = require("morgan"),
+	errorHandler = require("errorhandler"),
+	path = require('path'),
+	fs = require('fs'),
+	async = require("async"),
+	config = require('lib/config'),
+	user = require('./routes/user'),
+	music = require("lib/music/musicRoutes"),
+	db = require("lib/database");
+var scanner = require("lib/utils/musicScanner");
 
 var app = express();
 module.exports = app;
 
 var program = require("commander");
-program.version("0.0.1")
+program.version("0.5.0")
 	.usage("node app.js <music-dir(s)>")
 	.option('-p, --port <port>', "server will listen on this port", parseInt)
 	.option('-c, --config <file>', "server config file")
 //	.option('-i, --itunes <file>', "itunes library xml file")
 	.option('-m, --m3u <file>', "a comma separated list of m3u playlists")
 	.option('-d, --directory <dir>', "directory of m3u playlists")
-	.option('-v, --development <y/n>', "run in dev mode for more output");
+	.option('-u, --update', "update database with summary information")
+	.option('-v, --development', "run in dev mode for more output");
 
 /*
 var readItunes = function(itunes) {
@@ -61,6 +64,14 @@ var readPlaylists = function(dir, playlistsString, callback) {
 	}
 };
 
+var updateDatabaseSummaries = function(update, callback) {
+	if (update) {
+		db.updateSummaries(callback);
+	} else {
+		callback();
+	}
+};
+
 var startServer = function() {
 	console.log("Starting server");
 	
@@ -79,9 +90,10 @@ var startServer = function() {
 	app.use(express.static(path.join(__dirname, 'public')));
 
 	// development only
-	//if ('development' === app.get('env') || program.development === "y") {
-	  app.use(errorHandler());
-	//}
+	if (program.development) {
+		console.log("Starting in dev mode");
+		app.use(errorHandler());
+	}
 
 	app.get('/', routes.index);
 	app.get('/users', user.list);
@@ -93,23 +105,32 @@ var startServer = function() {
 };
 
 //initialisation
-program.parse(process.argv);
+async.waterfall([
+	 function(callback) {
+		 program.parse(process.argv);
+		 config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
+		 db.initialise();
+		 callback();
+	 },
+	 function(callback) {
+		 if (program.args.length > 0) {
+			 scanner.scanDirectories(program.args, callback);
+		 } else {
+			 callback();
+		 }
+	 },
+	 function(callback) {
+		 readPlaylists(program.directory, program.m3u, callback);
+	 },
+	 function(callback) {
+		 updateDatabaseSummaries(program.update, callback);
+	 }
 
-config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
+], function(err) {
+	if (err) {throw err;}
+	startServer();
+});
 
-db.initialise();
-
-var scanner = require("lib/utils/musicScanner");
-if (program.args.length > 0) {
-	scanner.scanDirectories(program.args, function() {
-		console.log("Finished directory scan");
-		//readItunes(program.itunes);
-		readPlaylists(program.directory, program.m3u, startServer);
-	});
-} else {
-	//readItunes(program.itunes);
-	readPlaylists(program.directory, program.m3u, startServer);
-}
 
 
 
