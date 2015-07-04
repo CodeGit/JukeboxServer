@@ -1,26 +1,7 @@
-extends layout
-
-//
-   Created by maq on 04/07/2015.
+extends header
 
 block content
-    nav(class="navbar navbar-inverse navbar-fixed-top")
-        div(class="container")
-            div(class="navbar-header")
-                button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar")
-                    span(class="sr-only")
-                    span(class="icon-bar")
-                    span(class="icon-bar")
-                    span(class="icon-bar")
-                    span(class="icon-bar")
-                a(class="navbar-brand" href="/music") Jukebox
-            div(id="navbar" class="collapse navbar-collapse")
-                ul(class="nav navbar-nav")
-                    li()
-                        a(href="/music") Music
-                    li()
-                        a(href="/music/artist") Artists
-                    li()
-                        a(href="/music/album") Albums
-                    li()
-                        a(href="/music/playlists") Playlists
+    p #{data.count}
+    ul
+        each hit, index in data.hits
+            li= (index+1) + " : " + hit
