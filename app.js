@@ -9,21 +9,21 @@ require('rootpath')();
 var DEFAULT_CONFIG_FILE = "config/default.json";
 
 var express = require('express'),
-	routes = require('./routes'),
-	cookieParser = require('cookie-parser'),
-	cookieSession = require('cookie-session'),
-	formidable = require("formidable"),
-	methodOverride = require("method-override"),
-	favicon = require("serve-favicon"),
-	logger = require("morgan"),
-	errorHandler = require("errorhandler"),
-	path = require('path'),
-	fs = require('fs'),
-	async = require("async"),
-	config = require('lib/config'),
-	user = require('./routes/user'),
-	music = require("lib/music/musicRoutes"),
-	db = require("lib/database");
+    routes = require('./routes'),
+    cookieParser = require('cookie-parser'),
+    cookieSession = require('cookie-session'),
+    formidable = require("formidable"),
+    methodOverride = require("method-override"),
+    favicon = require("serve-favicon"),
+    logger = require("morgan"),
+    errorHandler = require("errorhandler"),
+    path = require('path'),
+    fs = require('fs'),
+    async = require("async"),
+    config = require('lib/config'),
+    user = require('./routes/user'),
+    music = require("lib/music/musicRoutes"),
+    db = require("lib/database");
 var scanner = require("lib/utils/musicScanner");
 
 var app = express();
@@ -31,104 +31,105 @@ module.exports = app;
 
 var program = require("commander");
 program.version("0.5.0")
-	.usage("node app.js <music-dir(s)>")
-	.option('-p, --port <port>', "server will listen on this port", parseInt)
-	.option('-c, --config <file>', "server config file")
-//	.option('-i, --itunes <file>', "itunes library xml file")
-	.option('-m, --m3u <file>', "a comma separated list of m3u playlists")
-	.option('-d, --directory <dir>', "directory of m3u playlists")
-	.option('-u, --update', "update database with summary information")
-	.option('-v, --development', "run in dev mode for more output");
+    .usage("node app.js <music-dir(s)>")
+    .option('-p, --port <port>', "server will listen on this port", parseInt)
+    .option('-c, --config <file>', "server config file")
+//.option('-i, --itunes <file>', "itunes library xml file")
+    .option('-m, --m3u <file>', "a comma separated list of m3u playlists")
+    .option('-d, --directory <dir>', "directory of m3u playlists")
+    .option('-u, --update', "update database with summary information")
+    .option('-v, --development', "run in dev mode for more output");
 
 /*
 var readItunes = function(itunes) {
-	if (itunes !== undefined) {
-		console.log("Reading itunes");
-		var itunesReader = require("lib/utils/playlistsFromItunes");
-		itunesReader.createPlaylists(itunes);
-	}
+    if (itunes !== undefined) {
+        console.log("Reading itunes");
+        var itunesReader = require("lib/utils/playlistsFromItunes");
+        itunesReader.createPlaylists(itunes);
+    }
 };
 */
 
 var readPlaylists = function(dir, playlistsString, callback) {
-	var playlistReader = require("lib/utils/playlistsFromM3u");
-	if (dir == null && playlistsString == null){
-		callback();
-	} 
-	if (dir !== undefined) {
-		playlistReader.readPlaylistDirectory(dir, callback);
-	}
-	if (playlistsString !== undefined) {
-		var playlists = playlistsString.split(",");
-		playlistReader.readPlaylists(playlists, callback);
-	}
+    var playlistReader = require("lib/utils/playlistsFromM3u");
+    if (dir == null && playlistsString == null){
+        callback();
+    }
+    if (dir !== undefined) {
+        playlistReader.readPlaylistDirectory(dir, callback);
+    }
+    if (playlistsString !== undefined) {
+        var playlists = playlistsString.split(",");
+        playlistReader.readPlaylists(playlists, callback);
+    }
 };
 
 var updateDatabaseSummaries = function(update, callback) {
-	if (update) {
-		db.updateSummaries(callback);
-	} else {
-		callback();
-	}
+    if (update) {
+        db.updateSummaries(callback);
+    } else {
+        callback();
+    }
 };
 
-var startServer = function() {
-	console.log("Starting server");
-	
-	// all environments
-	app.set('port', program.port || 3000);
-	app.set('view engine', "jade");
-	
-	app.set('views', __dirname + '/views');
-	app.set('view engine', 'jade');
-	app.use(favicon(config.settings.favicon));
-	app.use(logger('dev'));
-	//app.use(formidable());
-	app.use(cookieParser());
-	app.use(cookieSession({secret:'jukebox'}));
-	app.use(methodOverride());
-	app.use(express.static(path.join(__dirname, 'public')));
+var startServer = function () {
+    console.log("Starting server");
 
-	// development only
-	if (program.development) {
-		console.log("Starting in dev mode");
-		app.use(errorHandler());
-	}
+    // all environments
+    app.set('port', program.port || 3000);
+    app.set('view engine', "jade");
 
-	app.get('/', routes.index);
-	app.get('/users', user.list);
-	app.use('/music', music);
+    app.set('views', __dirname + '/views');
+    app.set('view engine', 'jade');
+    app.use(favicon(config.settings.favicon));
+    app.use(logger('dev'));
+    //app.use(formidable());
+    app.use(cookieParser());
+    app.use(cookieSession({secret:'jukebox'}));
+    app.use(methodOverride());
+    app.use(express.static(path.join(__dirname, 'public')));
 
-	var server = app.listen(app.get('port'), function() {
-		console.log('Express server listening on port ' + app.get('port'));
-	});
+    // development only
+    if (program.development) {
+        console.log("Starting in dev mode");
+        app.use(errorHandler());
+    }
+
+    app.get('/', function (req, res) {
+        res.redirect("/music");
+    });
+    app.use('/music', music);
+
+    var server = app.listen(app.get('port'), function () {
+        console.log('Express server listening on port ' + app.get('port'));
+    });
 };
 
 //initialisation
 async.waterfall([
-	 function(callback) {
-		 program.parse(process.argv);
-		 config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
-		 db.initialise();
-		 callback();
-	 },
-	 function(callback) {
-		 if (program.args.length > 0) {
-			 scanner.scanDirectories(program.args, callback);
-		 } else {
-			 callback();
-		 }
-	 },
-	 function(callback) {
-		 readPlaylists(program.directory, program.m3u, callback);
-	 },
-	 function(callback) {
-		 updateDatabaseSummaries(program.update, callback);
-	 }
+    function (callback) {
+        program.parse(process.argv);
+        config.loadConfig(program.config || DEFAULT_CONFIG_FILE);
+        db.initialise();
+        callback();
+    },
+    function (callback) {
+        if (program.args.length > 0) {
+            scanner.scanDirectories(program.args, callback);
+        } else {
+            callback();
+        }
+    },
+    function (callback) {
+        readPlaylists(program.directory, program.m3u, callback);
+    },
+    function (callback) {
+        updateDatabaseSummaries(program.update, callback);
+    }
 
-], function(err) {
-	if (err) {throw err;}
-	startServer();
+], function (err) {
+    if (err) {throw err; }
+    startServer();
 });
 
 
