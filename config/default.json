@@ -12,7 +12,7 @@
 	"image": { 
 		"suffixes": [".jpg", ".png"]
 	},
-	"favicon": "public/images/favicon.ico",
+	"favicon": "public/images/favicon-64.ico",
 	"search": {
 		"resultsPerPage": 10
 	}

@@ -1,11 +1,13 @@
 extends header
 
 block content
-    p #{data.count}
-    ul(class="list-group")
+    div(class="list-group")
         each hit, index in data.hits
-            li("list-group-item" href="music/song?#{hit._id}")
-                div #{hit.title}
-                div #{hit.artist}
-                div #{hit.album}
+            a(class="list-group-item clearfix" href="/music/queue?#{hit._id}")
+                span()
+                    h3(class="title") #{hit.title}
+                    h4(class="artist") #{hit.artist}
+                    p(class="album lit-group-item-text") #{hit.album}
+                //span(class="pull-right glyphicon glyphicon-ok" style="font-size:1.5em;")
+
 

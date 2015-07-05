@@ -11,9 +11,14 @@ block header
                     span(class="icon-bar")
                     span(class="icon-bar")
                     span(class="icon-bar")
-                a(class="navbar-brand" href="/music") Jukebox
+                    span(class="icon-bar")
+                a(class="navbar-brand" href="/music")
+                    span(class="glyphicon glyphicon-cd")
+                    span &nbsp;Jukebox
             div(id="navbar" class="collapse navbar-collapse")
                 ul(class="nav navbar-nav")
+                    li()
+                        a(href="/music") Up next
                     li()
                         a(href="/music") Music
                     li()
@@ -27,6 +32,7 @@ block header
 block footer
     nav(class="navbar navbar-default navbar-fixed-bottom")
         div(class="container")
+            span #{data.count} matches
             span(class="glyphicon glyphicon-menu-left")
             span Page: #{page}
             span(class="glyphicon glyphicon-menu-right")
