@@ -2,6 +2,10 @@ extends header
 
 block content
     p #{data.count}
-    ul
+    ul(class="list-group")
         each hit, index in data.hits
-            li= (index+1) + " : " + hit
+            li("list-group-item" href="music/song?#{hit._id}")
+                div #{hit.title}
+                div #{hit.artist}
+                div #{hit.album}
+

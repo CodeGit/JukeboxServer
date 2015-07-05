@@ -1,0 +1,6 @@
+extends header
+block content
+    p #{data.count}
+    ul
+        each hit, index in data.hits
+            li= (index + 1) + " : " + hit
