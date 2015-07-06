@@ -1,6 +1,11 @@
 extends header
 block content
-    p #{data.count}
-    ul
+    div(class="list-group")
         each hit, index in data.hits
-            li= (index + 1) + " : " + hit
+            div(class="row")
+                a(class="list-group-item clearfix" href="/music/filter?artist=#{hit._id}")
+                    div(class="col-xs-11")
+                        h4(class="title") #{hit.album}
+                    div(class="col-xs-1")
+                        span(class="badge") #{hit.music}
+                                                     

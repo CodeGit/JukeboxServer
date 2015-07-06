@@ -4,10 +4,12 @@ block content
     div(class="list-group")
         each hit, index in data.hits
             a(class="list-group-item clearfix" href="/music/queue?#{hit._id}")
-                span()
-                    h3(class="title") #{hit.title}
-                    h4(class="artist") #{hit.artist}
-                    p(class="album lit-group-item-text") #{hit.album}
-                //span(class="pull-right glyphicon glyphicon-ok" style="font-size:1.5em;")
+                div(class="row")
+                    div(class="col-xs-8")
+                        h2(class="title") #{hit.title}
+                        h4(class="artist") #{hit.artist}
+                        p(class="album list-group-item-text") #{hit.album}
+                    div(class="col-xs-4")
+                        span(class="pull-right glyphicon glyphicon-ok" style="font-size:1.5em;")
 
 
