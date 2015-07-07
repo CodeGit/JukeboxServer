@@ -14,6 +14,6 @@
 	},
 	"favicon": "public/images/favicon-64.ico",
 	"search": {
-		"resultsPerPage": 10
+		"resultsPerPage": 50
 	}
 }
