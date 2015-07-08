@@ -84,10 +84,10 @@ var startServer = function () {
     app.set('view engine', 'jade');
     app.use(favicon(config.settings.favicon));
     app.use(logger('dev'));
-    app.use(bodyParser.json());
     app.use(bodyParser.raw());
     app.use(bodyParser.text());
-    app.use(bodyParser.urlencoded());
+    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
     app.use(cookieParser());
     app.use(cookieSession({
         secret: 'jukebox',

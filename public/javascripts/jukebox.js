@@ -8,12 +8,12 @@ var Jukebox = {};
 (function (context) {
     context.addMusicToQueue = function(path, musicId) {
         //setup the form
-        var queueForm = new FormData();
-        queueForm.append("music", musicId);
+        var parameters = "music=" + musicId;
         //prepare ajax call
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", path, true);
-        xmlHttpReq.send(queueForm);
+        xmlHttpReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlHttpReq.send(parameters);
         xmlHttpReq.onload = function () {
             alert("Response " + xmlHttpReq.responseText);
         };
