@@ -18,8 +18,8 @@
 	},
     "queue": {
         "max": 100
-    }
+    },
     "session": {
-        "duration": 172800000 //48hrs in milliseconds
+        "duration": 172800000
     }
 }
