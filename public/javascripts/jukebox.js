@@ -6,9 +6,9 @@
 
 var Jukebox = {};
 (function (context) {
-    context.addMusicToQueue = function(path, musicId) {
+    context.addMusicToQueue = function(path, musicId, title) {
         //setup the form
-        var parameters = "music=" + musicId;
+        var parameters = "music=" + musicId + "&title=" + title;
         //prepare ajax call
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", path, true);
