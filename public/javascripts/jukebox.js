@@ -7,16 +7,16 @@
 var Jukebox = {};
 (function (context) {
     context.addMusicToQueue = function(path, musicId) {
-        var queueForm = document.createElement("form");
-        queueForm.setAttribute("method", "POST");
-        queueForm.setAttribute("action", path);
-        var musicField = document.createElement("input");
-        musicField.setAttribute("type", "hidden");
-        musicField.setAttribute("name", "music");
-        musicField.setAttribute("value", musicId);
-        queueForm.appendChild(musicField)
-        document.body.appendChild(queueForm);
-        queueForm.submit();
+        //setup the form
+        var queueForm = new FormData();
+        queueForm.append("music", musicId);
+        //prepare ajax call
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("POST", path, true);
+        xmlHttpReq.send(queueForm);
+        xmlHttpReq.onload = function () {
+            alert("Response " + xmlHttpReq.responseText);
+        };
         return false;
     };
 

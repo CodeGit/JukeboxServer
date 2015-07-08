@@ -12,7 +12,7 @@ var express = require('express'),
     routes = require('./routes'),
     cookieParser = require('cookie-parser'),
     cookieSession = require('cookie-session'),
-    formidable = require("formidable"),
+    bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     favicon = require("serve-favicon"),
     logger = require("morgan"),
@@ -84,7 +84,10 @@ var startServer = function () {
     app.set('view engine', 'jade');
     app.use(favicon(config.settings.favicon));
     app.use(logger('dev'));
-    //app.use(formidable());
+    app.use(bodyParser.json());
+    app.use(bodyParser.raw());
+    app.use(bodyParser.text());
+    app.use(bodyParser.urlencoded());
     app.use(cookieParser());
     app.use(cookieSession({
         secret: 'jukebox',

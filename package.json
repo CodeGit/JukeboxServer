@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "async": "^1.2.1",
+    "body-parser": "^1.13.2",
     "bootstrap": "^3.3.5",
     "chai": "~3.0.0",
     "commander": "~2.8.1",
@@ -15,7 +16,6 @@
     "cookie-session": "~1.1.0",
     "errorhandler": "~1.4.0",
     "express": "4.13.0",
-    "formidable": "~1.0.17",
     "fs": "0.0.2",
     "fs-utils": "~0.6.0",
     "jade": "~1.11.0",

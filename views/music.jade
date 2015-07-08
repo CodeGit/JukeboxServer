@@ -3,7 +3,7 @@ extends header
 block content
     div(class="list-group")
         each hit, index in data.hits
-            a(class="list-group-item clearfix" onclick="Jukebox.addMusicToQueue('/queue', '#{hit._id');return false;")
+            a(class="list-group-item clearfix" onclick="return Jukebox.addMusicToQueue('/queue', '#{hit._id')")
                 div(class="row")
                     div(class="col-xs-8")
                         h4(class="title") #{hit.title}
