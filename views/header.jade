@@ -12,13 +12,20 @@ block header
                     span(class="icon-bar")
                     span(class="icon-bar")
                     span(class="icon-bar")
+                    span(class="icon-bar")
                 a(class="navbar-brand" href="/music")
                     span(class="glyphicon glyphicon-cd")
                     span &nbsp;Jukebox
             div(id="navbar" class="collapse navbar-collapse")
+                form(class="navbar-form navbar-right" role="search")
+                    div(class="input-group")
+                        span(class="input-group-btn")
+                            button(class="btn btn-default" type="button")
+                                span(class="glyphicon glyphicon glyphicon-search" aria-hidden="true")
+                        input(type="text" class="form-control" placeholder="filter items...")
                 ul(class="nav navbar-nav")
                     li()
-                        a(href="/music") Up next
+                        a(href="/queue") Up next
                     li()
                         a(href="/music") Music
                     li()
@@ -27,12 +34,15 @@ block header
                         a(href="/music/album") Albums
                     li()
                         a(href="/music/playlists") Playlists
+
         div(class="container")
 
 block footer
     nav(class="navbar navbar-default navbar-fixed-bottom")
-        div(class="container")
-            span #{data.count} matches
-            span(class="glyphicon glyphicon-menu-left")
-            span Page: #{page}
-            span(class="glyphicon glyphicon-menu-right")
+        ul(class="pagination")
+            li
+                a(aria-label="Previous" onclick="Jukebox.previousPage(#{path}, #{page), #{data.count}); return false;")
+                    span(aria-hidden="true") &laquo;
+            li
+                a(aria-label="Next" onclick="Jukebox.nextPage(#{path}, #{page), #{data.count}); return false;")
+                    span(aria-hidden="true") &raquo;

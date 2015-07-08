@@ -4,9 +4,28 @@
 
 "use strict";
 
-var Util = {};
+var Jukebox = {};
 (function (context) {
-    context.escapeArtistUrl = function (baseUrl, component) {
-        console.log("processLink(" + baseUrl + ", " + component + ")");
+    context.addMusicToQueue = function(path, musicId) {
+        var queueForm = document.createElement("form");
+        queueForm.setAttribute("method", "POST");
+        queueForm.setAttribute("action", path);
+        var musicField = document.createElement("input");
+        musicField.setAttribute("type", "hidden");
+        musicField.setAttribute("name", "music");
+        musicField.setAttribute("value", musicId);
+        queueForm.appendChild(musicField)
+        document.body.appendChild(queueForm);
+        queueForm.submit();
+        return false;
     };
-})(Util);
+
+
+    context.previousPage = function(path, page, total) {
+
+    };
+
+    context.nextPage = function(path, page, total) {
+
+    };
+})(Jukebox);

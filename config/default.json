@@ -15,5 +15,11 @@
 	"favicon": "public/images/favicon-64.ico",
 	"search": {
 		"resultsPerPage": 50
-	}
+	},
+    "queue": {
+        "max": 100
+    }
+    "session": {
+        "duration": 172800000 //48hrs in milliseconds
+    }
 }

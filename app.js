@@ -23,6 +23,7 @@ var express = require('express'),
     config = require('lib/config'),
     user = require('./routes/user'),
     music = require("lib/music/musicRoutes"),
+    queue = require("lib/queue/queueRoutes"),
     db = require("lib/database");
 var scanner = require("lib/utils/musicScanner");
 
@@ -85,7 +86,11 @@ var startServer = function () {
     app.use(logger('dev'));
     //app.use(formidable());
     app.use(cookieParser());
-    app.use(cookieSession({secret:'jukebox'}));
+    app.use(cookieSession({
+        secret: 'jukebox',
+        name: 'session',
+
+    }));
     app.use(methodOverride());
     app.use(express.static(path.join(__dirname, 'public')));
 
@@ -95,10 +100,16 @@ var startServer = function () {
         app.use(errorHandler());
     }
 
-    app.get('/', function (req, res) {
+    app.all("/*", function(req, res, next){
+        console.log("Add user/cookie/credit processing here");
+        next();
+    });
+
+    app.get('/', function (req, res, next) {
         res.redirect("/music");
     });
     app.use('/music', music);
+    app.use('/queue', queue);
 
     var server = app.listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));
