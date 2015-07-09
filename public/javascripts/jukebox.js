@@ -21,11 +21,25 @@ var Jukebox = {};
     };
 
 
-    context.previousPage = function(path, page, total) {
+    context.previousPage = function(path, page, total, resultsPerPage) {
+        var newPage = (page - 1);
+        if (newPage > -1) {
+            this._newPage(path, newPage);
+        }
+    };
+
+    context.nextPage = function(path, page, total, resultsPerPage) {
+        var newPage = ((page * 1) + 1);
+        if ((newPage * resultsPerPage) < total) {
+            this._newPage(path, newPage);
+        }
 
     };
 
-    context.nextPage = function(path, page, total) {
-
-    };
+    context._newPage = function(path, newPage) {
+        var url = path + "?page=" + newPage;
+        console.log("previousPage URL: " + url);
+        location.assign(url);
+        return false;
+    }
 })(Jukebox);
