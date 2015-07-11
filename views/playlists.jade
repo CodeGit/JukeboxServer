@@ -1,4 +1,7 @@
 extends header
+block footer
+    include footer
+
 block content
     div(class="list-group")
         each hit, index in data.hits

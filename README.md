@@ -19,16 +19,18 @@ Add eclipse luna plugins from:
 http://www.nodeclipse.org/updates/
 http://www.eclipse.org/egit/download/
 
+global
+chai mocha express nodemon npm
+
 
 ### Tools
 
-Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)
- ([Eclipse Marketplace](http://marketplace.eclipse.org/content/nodeclipse), [site](http://www.nodeclipse.org))   
-
-Nodeclipse is free open-source project that grows with your contributions.
 
 #### Dependencies
+libgroove => [pkg-config, texi2html, yasm, x264, lame, libvo-aacenc, xvid, libogg, libvorbis, ffmpeg, chromaprint, speex, libebur128, sdl2]
+xcode and xcode commandline tools
 
+brew install libgroove
 ##### System
 mongodb
 
@@ -40,4 +42,5 @@ rootpath
 mongoose
 
 
-
+brew install gcc gpp:
+gcc: gmp, mpfr, libmpc, isl

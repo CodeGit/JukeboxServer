@@ -24,6 +24,7 @@ var express = require('express'),
     user = require('./routes/user'),
     music = require("lib/music/musicRoutes"),
     queue = require("lib/queue/queueRoutes"),
+    player = require("lib/player/playerRoutes"),
     db = require("lib/database");
 var scanner = require("lib/utils/musicScanner");
 
@@ -113,6 +114,7 @@ var startServer = function () {
     });
     app.use('/music', music);
     app.use('/queue', queue);
+    app.use('/player', player);
 
     var server = app.listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));

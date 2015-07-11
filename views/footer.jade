@@ -1,0 +1,12 @@
+//
+   Created by maq on 11/07/2015.
+
+block footer
+    nav(class="navbar navbar-default navbar-fixed-bottom")
+        ul(class="pagination")
+            li
+                a(aria-label="Previous" onclick="return Jukebox.previousPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
+                    span(aria-hidden="true") &laquo;
+            li
+                a(aria-label="Next" onclick="return Jukebox.nextPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
+                    span(aria-hidden="true") &raquo;
