@@ -4,13 +4,22 @@
 extends header
 
 block content
+    h2 Player controls
     div(class="btn-group btn-group-lg btn-group-justified" aria-label="player controls")
+        //div(class="btn-group" role="group")
+            button(onclick="Jukebox.player('rewind')" type="button" class="btn btn-default btn-lg" aria-label="rewind")
+                span(class="glyphicon glyphicon-fast-backward")
         div(class="btn-group" role="group")
-            button(type="button" class="btn btn-default" aria-label="play")
+            button(onclick="Jukebox.player('stop')" type="button" class="btn btn-default btn-lg" aria-label="stop")
+                span(class="glyphicon glyphicon-stop")
+        div(class="btn-group" role="group")
+            button(onclick="Jukebox.player('play')" type="button" class="btn btn-default btn-lg" aria-label="play")
                 span(class="glyphicon glyphicon-play")
         div(class="btn-group" role="group")
-            button(type="button" class="btn btn-default" aria-label="pause")
+            button(onclick="Jukebox.player('pause')" type="button" class="btn btn-default btn-lg" aria-label="pause")
                 span(class="glyphicon glyphicon-pause")
-        div(class="btn-group" role="group")
-            button(type="button" class="btn btn-default" aria-label="stop")
-                span(class="glyphicon glyphicon-stop")
+        //div(class="btn-group" role="group")
+            button(onclick="Jukebox.player('forward')" type="button" class="btn btn-default btn-lg" aria-label="forward")
+                span(class="glyphicon glyphicon-fast-forward")
+
+

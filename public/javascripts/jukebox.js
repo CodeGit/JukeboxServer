@@ -42,4 +42,15 @@ var Jukebox = {};
         location.assign(url);
         return false;
     }
+
+    context.player = function(command) {
+        console.log("Got player command " + command);
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("GET", "/player/" + command, true);
+        xmlHttpReq.send();
+        xmlHttpReq.onload = function () {
+            alert("Response " + xmlHttpReq.responseText);
+        };
+
+    };
 })(Jukebox);

@@ -25,10 +25,12 @@ var express = require('express'),
     music = require("lib/music/musicRoutes"),
     queue = require("lib/queue/queueRoutes"),
     player = require("lib/player/playerRoutes"),
-    db = require("lib/database");
-var scanner = require("lib/utils/musicScanner");
+    groove = require("groove"),
+    db = require("lib/database"),
+    scanner = require("lib/utils/musicScanner");
 
 var app = express();
+app.locals.groove = groove;
 module.exports = app;
 
 var program = require("commander");
