@@ -65,6 +65,61 @@ var Jukebox = {};
     context.hideAlertBox = function() {
         var element = $("#alertBox");
         element.collapse('hide');
+    }
+
+    context.removeFromQueue = function(queueId) {
+        var parameters = "queue=" + queueId;
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("POST", "/queue/remove", true);
+        xmlHttpReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlHttpReq.send(parameters);
+        xmlHttpReq.onload = function () {
+            //using bootstrap jquery
+            var element = $("#alertBox");
+            element.collapse('show');
+            var response = JSON.parse(xmlHttpReq.responseText);
+            element.text(response.message);
+            console.log(response.message);
+            location.reload();
+        };
+    }
+
+    context.pushUpQueue = function(queueId) {
+        var parameters = "queue=" + queueId;
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("POST", "/queue/up", true);
+        xmlHttpReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlHttpReq.send(parameters);
+        xmlHttpReq.onload = function () {
+            //using bootstrap jquery
+            var element = $("#alertBox");
+            element.collapse('show');
+            var response = JSON.parse(xmlHttpReq.responseText);
+            element.text(response.message);
+            console.log(response.message);
+            location.reload();
+        };
+    }
+
+    context.pushDownQueue = function(queueId) {
+        var parameters = "queue=" + queueId;
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.open("POST", "/queue/down", true);
+        xmlHttpReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+        xmlHttpReq.send(parameters);
+        xmlHttpReq.onload = function () {
+            //using bootstrap jquery
+            var element = $("#alertBox");
+            element.collapse('show');
+            var response = JSON.parse(xmlHttpReq.responseText);
+            element.text(response.message);
+            console.log(response.message);
+            location.reload();
+        };
+
+    }
+
+    context.formatQueueParameters = function(queueId) {
 
     }
 })(Jukebox);
