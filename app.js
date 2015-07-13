@@ -10,8 +10,8 @@ var DEFAULT_CONFIG_FILE = "config/default.json";
 
 var express = require('express'),
     routes = require('./routes'),
-    cookieParser = require('cookie-parser'),
-    cookieSession = require('cookie-session'),
+    session = require('express-session'),
+    MongoStore = require('connect-mongo')(session),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     favicon = require("serve-favicon"),
@@ -85,18 +85,24 @@ var startServer = function () {
 
     app.set('views', __dirname + '/views');
     app.set('view engine', 'jade');
-    app.use(favicon(config.settings.favicon));
     app.use(logger('dev'));
     app.use(bodyParser.raw());
     app.use(bodyParser.text());
     app.use(bodyParser.urlencoded({ extended: true }));
     app.use(bodyParser.json());
-    app.use(cookieParser());
-    app.use(cookieSession({
-        secret: 'jukebox',
-        name: 'session',
 
+    var tomorrow = new Date(new Date().getTime() + (240 * 60 * 60 * 1000));
+    app.use(session({
+        secret: 'jukebox',
+        name: 'jukebox:session',
+        expires: tomorrow,
+        resave: false,
+        saveUninitialized: true,
+        store: new MongoStore({
+            mongooseConnection: db.connection
+        })
     }));
+    app.use(favicon(config.settings.favicon));
     app.use(methodOverride());
     app.use(express.static(path.join(__dirname, 'public')));
 
@@ -108,6 +114,13 @@ var startServer = function () {
 
     app.all("/*", function(req, res, next){
         console.log("Add user/cookie/credit processing here");
+        console.log("Session ID = " + req.sessionID);
+        if (!req.session.tokens) {
+            console.log("Handing out initial tokens");
+            req.session.tokens = config.settings.tokens.initial;
+        } else {
+            console.log("Has tokens = " + req.session.tokens);
+        }
         next();
     });
 

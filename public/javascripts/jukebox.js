@@ -6,16 +6,21 @@
 
 var Jukebox = {};
 (function (context) {
-    context.addMusicToQueue = function(path, musicId, title) {
+    context.addMusicToQueue = function(path, musicId) {
         //setup the form
-        var parameters = "music=" + musicId + "&title=" + title;
+        var parameters = "music=" + musicId;
         //prepare ajax call
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", path, true);
         xmlHttpReq.setRequestHeader("Content-type","application/x-www-form-urlencoded");
         xmlHttpReq.send(parameters);
         xmlHttpReq.onload = function () {
-            alert("Response " + xmlHttpReq.responseText);
+            //using bootstrap jquery
+            var element = $("#alertBox");
+            element.collapse('show');
+            var response = JSON.parse(xmlHttpReq.responseText);
+            element.text(response.message);
+            console.log(response.message);
         };
         return false;
     };
@@ -49,8 +54,17 @@ var Jukebox = {};
         xmlHttpReq.open("GET", "/player/" + command, true);
         xmlHttpReq.send();
         xmlHttpReq.onload = function () {
-            alert("Response " + xmlHttpReq.responseText);
+            var element = $("#alertBox");
+            element.collapse('show');
+            var response = JSON.parse(xmlHttpReq.responseText);
+            element.text(response.message);
+            console.log(response.message);
         };
-
     };
+
+    context.hideAlertBox = function() {
+        var element = $("#alertBox");
+        element.collapse('hide');
+
+    }
 })(Jukebox);

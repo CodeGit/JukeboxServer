@@ -22,5 +22,10 @@
     "session": {
         "duration": 172800000
     },
-    "defaultPlaylist": "jangletastic"
+    "defaultPlaylist": "jangletastic",
+    "tokens" : {
+        "initial": 10,
+        "max": 20,
+        "incrementInterval": 60
+    }
 }
