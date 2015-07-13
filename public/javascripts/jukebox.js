@@ -67,7 +67,7 @@ var Jukebox = {};
         element.collapse('hide');
     }
 
-    context.removeFromQueue = function(queueId) {
+    context.removeEntryFromQueue = function(queueId) {
         var parameters = "queue=" + queueId;
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", "/queue/remove", true);
@@ -84,7 +84,7 @@ var Jukebox = {};
         };
     }
 
-    context.pushUpQueue = function(queueId) {
+    context.moveEntryUpQueue = function(queueId) {
         var parameters = "queue=" + queueId;
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", "/queue/up", true);
@@ -101,7 +101,7 @@ var Jukebox = {};
         };
     }
 
-    context.pushDownQueue = function(queueId) {
+    context.moveEntryDownQueue = function(queueId) {
         var parameters = "queue=" + queueId;
         var xmlHttpReq = new XMLHttpRequest();
         xmlHttpReq.open("POST", "/queue/down", true);
