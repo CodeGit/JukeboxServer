@@ -1,0 +1,43 @@
+//
+   Created by maq on 13/07/2015.
+
+extends header
+
+block content
+    div(class="list-group")
+        if (nowPlaying != null)
+            div(class="row list-group-item list-group-item-success")
+                div(class="col-xs-4 col-md-4")
+                    span(class=" glyphicon glyphicon-play" style="vertical-align:middle; font-size:2em;")
+                div(class="col-xs-8 col-md-8")
+                    h5 #{nowPlaying.title}
+                    p #{nowPlaying.artist}
+                    p #{nowPlaying.album}
+        if (upNext != null)
+            div(class="row list-group-item list-group-item-info")
+                div(class="col-xs-4 col-md-4")
+                    span(class=" glyphicon glyphicon-forward" style="vertical-align:middle; font-size:2em;")
+                div(class="col-xs-8 col-md-8")
+                    h5 #{upNext.title}
+                    p #{upNext.artist}
+                    p #{upNext.album}
+
+        each entry, index in queue
+            div(class="row list-group-item")
+                div(class="col-xs-4 col-md-4")
+                    button(class="btn btn-default" type="button" onclick="Jukebox.moveEntryUp('entry.music._id')")
+                        span(class=" glyphicon glyphicon-arrow-up" style="vertical-align:middle; font-size:2em;")
+                    button(class="btn btn-default" type="button" onclick="Jukebox.moveEntryDown('entry.music._id')")
+                        span(class=" glyphicon glyphicon-arrow-down" style="vertical-align:middle; font-size:2em;")
+                    button(class="btn btn-default" type="button" onclick="Jukebox.removeEntry('entry.music._id')")
+                        span(class=" glyphicon glyphicon-remove" style="vertical-align:middle; font-size:2em;")
+                div(class="col-xs-8 col-md-8")
+                    h5 #{entry.music.title}
+                    p #{entry.music.artist}
+                    p #{entry.music.album}
+
+    script(type='text/javascript').
+        //reload the page every 20 seconds
+        setTimeout(function () {
+            location.reload();
+        }, 20 * 1000);
