@@ -3,10 +3,23 @@
 
 block footer
     nav(class="navbar navbar-default navbar-fixed-bottom")
-        ul(class="pagination")
-            li
-                a(aria-label="Previous" onclick="return Jukebox.previousPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
-                    span(aria-hidden="true") &laquo;
-            li
-                a(aria-label="Next" onclick="return Jukebox.nextPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
-                    span(aria-hidden="true") &raquo;
+        div(class="container-fluid")
+            div(class="navbar-header")
+                div(class="navbar-brand")
+                    span() Tokens :&nbsp;
+                    span(id="tokens")
+
+            if(page != null)
+                ul(class="pull-right pagination pagination")
+                    li
+                        a(aria-label="Previous" onclick="return Jukebox.previousPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
+                            span(aria-hidden="true") &laquo;
+                    li
+                        a(aria-label="Next" onclick="return Jukebox.nextPage('#{path}', #{page}, #{data.count}, #{resultsPerPage});")
+                            span(aria-hidden="true") &raquo;
+
+script(type='text/javascript').
+    //reload the page every 30 seconds
+    setTimeout(function () {
+        Jukebox.updateTokens();
+    }, 30 * 1000);

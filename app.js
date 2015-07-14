@@ -21,14 +21,14 @@ var express = require('express'),
     fs = require('fs'),
     async = require("async"),
     config = require('lib/config'),
-    user = require('./routes/user'),
     music = require("lib/music/musicRoutes"),
     queue = require("lib/queue/queueRoutes"),
     player = require("lib/player/playerRoutes"),
+    token = require("lib/token/tokenRoutes"),
     groove = require("groove"),
     db = require("lib/database"),
     scanner = require("lib/utils/musicScanner"),
-    tokenFairy = require("lib/tokens");
+    tokenFairy = require("lib/token/tokens");
 
 var app = express();
 app.locals.groove = groove;
@@ -133,6 +133,7 @@ var startServer = function () {
     app.use('/music', music);
     app.use('/queue', queue);
     app.use('/player', player);
+    app.use('/tokens', token);
 
     var server = app.listen(app.get('port'), function () {
         console.log('Express server listening on port ' + app.get('port'));

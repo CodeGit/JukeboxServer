@@ -21,6 +21,7 @@ var Jukebox = {};
             var response = JSON.parse(xmlHttpReq.responseText);
             element.text(response.message);
             console.log(response.message);
+            Jukebox.updateTokens();
         };
         return false;
     };
@@ -46,7 +47,7 @@ var Jukebox = {};
         console.log("previousPage URL: " + url);
         location.assign(url);
         return false;
-    }
+    };
 
     context.player = function(command) {
         console.log("Got player command " + command);
@@ -65,7 +66,7 @@ var Jukebox = {};
     context.hideAlertBox = function() {
         var element = $("#alertBox");
         element.collapse('hide');
-    }
+    };
 
     context.removeEntryFromQueue = function(queueId) {
         var parameters = "queue=" + queueId;
@@ -81,9 +82,10 @@ var Jukebox = {};
             //TODO add err message handling
             element.text(response.message);
             console.log(response.message);
+            Jukebox.updateTokens();
             location.reload();
         };
-    }
+    };
 
     context.moveEntryUpQueue = function(queueId) {
         var parameters = "queue=" + queueId;
@@ -99,9 +101,10 @@ var Jukebox = {};
             //TODO add err message handling
             element.text(response.message);
             console.log(response.message);
+            Jukebox.updateTokens();
             location.reload();
         };
-    }
+    };
 
     context.moveEntryDownQueue = function(queueId) {
         var parameters = "queue=" + queueId;
@@ -116,12 +119,25 @@ var Jukebox = {};
             var response = JSON.parse(xmlHttpReq.responseText);
             element.text(response.message);
             console.log(response.message);
+            Jukebox.updateTokens();
             location.reload();
         };
 
-    }
+    };
 
-    context.formatQueueParameters = function(queueId) {
+    context.updateTokens = function() {
+        var element = $("#tokens");
+        if (element != null) {
+            console.log("updating tokens");
+            var xmlHttpReq = new XMLHttpRequest();
+            xmlHttpReq.open("GET", "/tokens", true);
+            xmlHttpReq.send();
+            xmlHttpReq.onload = function () {
+                var response = JSON.parse(xmlHttpReq.responseText);
+                var element = $("#tokens");
+                element.text(response.tokens);
+            }
+        }
+    };
 
-    }
 })(Jukebox);
