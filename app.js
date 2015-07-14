@@ -27,7 +27,8 @@ var express = require('express'),
     player = require("lib/player/playerRoutes"),
     groove = require("groove"),
     db = require("lib/database"),
-    scanner = require("lib/utils/musicScanner");
+    scanner = require("lib/utils/musicScanner"),
+    tokenFairy = require("lib/tokens");
 
 var app = express();
 app.locals.groove = groove;
@@ -158,8 +159,10 @@ async.waterfall([
     },
     function (callback) {
         updateDatabaseSummaries(program.update, callback);
+    },
+    function(callback) {
+        tokenFairy.start(null, callback);
     }
-
 ], function (err) {
     if (err) {throw err; }
     startServer();
