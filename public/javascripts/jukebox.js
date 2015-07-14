@@ -78,6 +78,7 @@ var Jukebox = {};
             var element = $("#alertBox");
             element.collapse('show');
             var response = JSON.parse(xmlHttpReq.responseText);
+            //TODO add err message handling
             element.text(response.message);
             console.log(response.message);
             location.reload();
@@ -95,6 +96,7 @@ var Jukebox = {};
             var element = $("#alertBox");
             element.collapse('show');
             var response = JSON.parse(xmlHttpReq.responseText);
+            //TODO add err message handling
             element.text(response.message);
             console.log(response.message);
             location.reload();

@@ -115,10 +115,12 @@ var startServer = function () {
     app.all("/*", function(req, res, next){
         console.log("Add user/cookie/credit processing here");
         console.log("Session ID = " + req.sessionID);
-        if (!req.session.tokens) {
+        if (req.session.tokens == null) {
             console.log("Handing out initial tokens");
             req.session.tokens = config.settings.tokens.initial;
         } else {
+            //uncomment for testing
+            //req.session.tokens = config.settings.tokens.initial;
             console.log("Has tokens = " + req.session.tokens);
         }
         next();
