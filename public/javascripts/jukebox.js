@@ -140,4 +140,20 @@ var Jukebox = {};
         }
     };
 
+    context.search = function(path) {
+        var searchElement = $("#search");
+        var searchString = searchElement.val();
+        if (searchString !== "") {
+            window.open(path + "/filter?search=" + searchString);
+        }
+        return false;
+    }
+
+    context.searchFieldOnKeyDown = function(path) {
+        console.log("On key = " + event.keyCode);
+        if(event.keyCode === 13) {
+            context.search(path);
+        }
+        return false;
+    };
 })(Jukebox);
