@@ -42,10 +42,12 @@ var Jukebox = {};
 
     };
 
-    context._newPage = function(path, newPage) {
-        var url = path + "?page=" + newPage;
-        console.log("previousPage URL: " + url);
-        location.assign(url);
+    context._newPage = function(path,  newPage) {
+        var uri = new URI(path);
+        uri.removeSearch("page");
+        uri.addSearch("page", newPage);
+        console.log("Going to URL: " + uri.toString());
+        location.assign(uri.toString());
         return false;
     };
 
@@ -144,10 +146,19 @@ var Jukebox = {};
         var searchElement = $("#search");
         var searchString = searchElement.val();
         if (searchString !== "") {
-            window.open(path + "/filter?search=" + searchString);
+            var uri = new URI(path);
+            uri.removeSearch("search");
+            uri.addSearch("search", searchString);
+            var pathName = uri.path();
+            if (!pathName.match(/\/filter/)) {
+                var searchPath = uri.path() + "/filter";
+                uri.path(searchPath);
+            }
+            location.assign(uri.toString());
         }
         return false;
     }
+
 
     context.searchFieldOnKeyDown = function(path) {
         console.log("On key = " + event.keyCode);
