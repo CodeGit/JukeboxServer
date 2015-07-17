@@ -6,7 +6,7 @@ block content
     div(class="list-group")
         each hit, index in data.hits
             div(class="row")
-                a(class="list-group-item clearfix" href="/music/filter?#{hit.url_playlist}")
+                a(class="list-group-item clearfix" href="/music/filter?playlist=#{hit.url_playlist}")
                     div(class="col-xs-11")
                         h4(class="title") #{hit.playlist}
                     div(class="col-xs-1")

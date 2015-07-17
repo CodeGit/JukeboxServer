@@ -145,7 +145,10 @@ var Jukebox = {};
     context.search = function(path) {
         var searchElement = $("#search");
         var searchString = searchElement.val();
-        if (searchString !== "") {
+        console.log("Searching = " + searchString);
+        if (searchString !== null
+                && searchString !== undefined
+                && searchString !== "") {
             var uri = new URI(path);
             uri.removeSearch("search");
             uri.addSearch("search", searchString);
@@ -160,11 +163,7 @@ var Jukebox = {};
     }
 
 
-    context.searchFieldOnKeyDown = function(path) {
-        console.log("On key = " + event.keyCode);
-        if(event.keyCode === 13) {
-            context.search(path);
-        }
-        return false;
-    };
+    context.onload = function() {
+        context.updateTokens();
+    }
 })(Jukebox);
